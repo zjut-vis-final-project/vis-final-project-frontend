@@ -1,10 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <el-container class="home-container">
+      <!-- 头部 -->
+      <el-header class="nav" height="7vh">
+        <!-- <div > -->
+        <div class="title">Covid-19可视分析系统</div>
+        <div class="change">
+          <router-link to="/">中国板块 |</router-link>
+          <router-link to="/world">| 世界板块</router-link>
+        </div>
+        <div class="setting">设置</div>
+        <!-- </div> -->
+      </el-header>
+      <!-- 主要区域 -->
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -13,20 +25,52 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* text-align: center; */
+  /* color: #2c3e50; */
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.home-container {
+  height: 100%;
+}
+.el-header {
+  line-height: 7vh;
+}
+.el-main {
+  background-color: #e9eef3;
+  /* background: #606266; */
+  height: 93vh;
+  overflow: hidden;
+}
+
+.nav {
+  width: 100%;
+  background: #333333;
+  color: white;
   text-align: center;
-  color: #2c3e50;
+  display: flex;
 }
-
-#nav {
-  padding: 30px;
+.nav a {
+  color: white;
+  text-decoration: none;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.nav .title {
+  width: 25%;
+  font-size: 26px;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.nav .change {
+  text-align: center;
+  width: 50%;
+}
+.nav .setting {
+  width: 25%;
+}
+.content {
+  /* height: 94vh; */
+  /* background: red; */
 }
 </style>
