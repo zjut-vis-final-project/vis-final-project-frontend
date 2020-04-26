@@ -3,14 +3,12 @@
     <el-container class="home-container">
       <!-- 头部 -->
       <el-header class="nav" height="7vh">
-        <!-- <div > -->
         <div class="title">Covid-19可视分析系统</div>
         <div class="change">
           <router-link to="/">中国板块 |</router-link>
           <router-link to="/world">| 世界板块</router-link>
         </div>
         <div class="setting">设置</div>
-        <!-- </div> -->
       </el-header>
       <!-- 主要区域 -->
       <el-main>
@@ -27,6 +25,7 @@
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   /* color: #2c3e50; */
+  height: 100%;
 }
 body {
   margin: 0;
@@ -42,7 +41,6 @@ body {
 }
 .el-main {
   background-color: #e9eef3;
-  /* background: #606266; */
   height: 93vh;
   overflow: hidden;
 }

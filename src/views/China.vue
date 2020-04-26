@@ -42,27 +42,29 @@ export default {
 <style scoped>
 .partChina {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .partChina .up {
   width: 100%;
-  height: 55%;
+  /* height: 55%; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* overflow: hidden; */
 }
 .partChina .down {
   width: 100%;
-  height: 40%;
+  /* height: 40%; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* overflow: hidden; */
 }
 .partChina .box-card {
-  margin: 0 5px;
+  margin: 5px 5px;
 }
 </style>>
 

@@ -66,4 +66,7 @@ export default {
   width: 60%;
   height: 300px;
 }
+.leaflet-container {
+  overflow: visible;
+}
 </style>

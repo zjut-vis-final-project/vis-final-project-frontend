@@ -10,7 +10,6 @@
     ></el-date-picker>
     <h3>确诊人数:</h3>100
     <h3>治愈人数:</h3>100
-    <h3>疑似人数:</h3>100
     <h3>死亡人数:</h3>100
   </el-card>
 </template>
@@ -61,6 +60,7 @@ export default {
 .timeAndBasic {
   width: 20%;
   height: 300px;
+  /* overflow: hidden; */
 }
 .el-date-editor--daterange.el-input,
 .el-date-editor--daterange.el-input__inner,
