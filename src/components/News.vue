@@ -3,10 +3,12 @@
     <h3>重大新闻</h3>
     <el-timeline :reverse="reverse">
       <el-timeline-item
-        v-for="(activity, index) in activities"
-        :key="index"
-        :timestamp="activity.timestamp"
-      >{{activity.content}}</el-timeline-item>
+        v-for="item in mynews"
+        :key="item.news_id"
+        :timestamp="item.news_time+item.news_owner"
+      >
+        <a href="#">{{item.news_title}}</a>
+      </el-timeline-item>
     </el-timeline>
   </el-card>
 </template>
@@ -15,34 +17,33 @@
 export default {
   data() {
     return {
-      reverse: true,
-      activities: [
-        {
-          content: "活动按期开始",
-          timestamp: "2018-04-15"
-        },
-        {
-          content: "通过审核",
-          timestamp: "2018-04-13"
-        },
-        {
-          content: "创建成功",
-          timestamp: "2018-04-11"
-        },
-        {
-          content: "活动按期开始",
-          timestamp: "2018-04-15"
-        },
-        {
-          content: "通过审核",
-          timestamp: "2018-04-13"
-        },
-        {
-          content: "创建成功",
-          timestamp: "2018-04-11"
-        }
-      ]
+      reverse: false,
+      mynews: []
     };
+  },
+  mounted() {
+    this.getCountryNewsCN();
+  },
+  methods: {
+    async getCountryNewsCN() {
+      const { data: newsData } = await this.$http.get(
+        "http://127.0.0.1:3000/getCountryNewsCN",
+        {
+          params: {
+            start: this.$store.state.startTime,
+            end: this.$store.state.endTime
+          }
+        }
+      );
+      console.log(newsData);
+      this.mynews = newsData;
+    }
+  },
+  watch: {
+    // 监听vuex里是否又变化
+    "$store.state.signal"() {
+      this.getCountryNewsCN();
+    }
   }
 };
 </script>
@@ -55,5 +56,12 @@ export default {
 }
 h3 {
   margin-top: 0;
+}
+ul {
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>

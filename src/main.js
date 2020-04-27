@@ -3,6 +3,8 @@ import App from './App.vue';
 import router from './router';
 import echarts from 'echarts';
 import axios from 'axios';
+import Vuex from 'vuex'
+import store from './store/store'
 import {
   Card,
   Main,
@@ -27,5 +29,6 @@ Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios;
 new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount('#app');

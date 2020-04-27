@@ -1,12 +1,13 @@
 <template>
   <el-card class="box-card timeAndBasic">
     <el-date-picker
-      v-model="value1"
+      v-model="timeRange"
       type="daterange"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
       size="mini"
+      @change="onchange"
     ></el-date-picker>
     <h3>确诊人数:</h3>100
     <h3>治愈人数:</h3>100
@@ -18,40 +19,30 @@
 export default {
   data() {
     return {
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
-      value1: "",
-      value2: ""
+      timeRange: ""
     };
+  },
+  created() {
+    console.log(this);
+  },
+  methods: {
+    onchange() {
+      // vuex 改变全局状态
+      this.$store.commit("timeChange", this.formatTime);
+      console.log("起始时间:", this.$store.state.startTime);
+      console.log("截至时间:", this.$store.state.endTime);
+    }
+  },
+  computed: {
+    // 将时间格式化成 2020/3/1
+    formatTime: function() {
+      let result = [];
+      for (let i in this.timeRange) {
+        let temp = this.timeRange[i].toLocaleDateString();
+        result.push(temp);
+      }
+      return result;
+    }
   }
 };
 </script>

@@ -14,6 +14,7 @@ export default {
   mounted() {
     this.drawLine();
     // this.adjust();
+    this.request();
   },
   methods: {
     drawLine() {
@@ -62,6 +63,10 @@ export default {
       charts.style.width = wi;
       // charts.style.height = hi;
       console.log(wi, hi);
+    },
+    async request() {
+      const { data: data234 } = await this.$http.get("http://127.0.0.1:3000/");
+      console.log(data234);
     }
   }
 };
