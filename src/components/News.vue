@@ -5,9 +5,9 @@
       <el-timeline-item
         v-for="item in mynews"
         :key="item.news_id"
-        :timestamp="item.news_time+item.news_owner"
+        :timestamp="(new Date(item.news_time)).toLocaleString()+item.news_owner"
       >
-        <a href="#">{{item.news_title}}</a>
+        <a target="blank" :href="item.news_link">{{item.news_title}}</a>
       </el-timeline-item>
     </el-timeline>
   </el-card>
@@ -17,7 +17,7 @@
 export default {
   data() {
     return {
-      reverse: false,
+      reverse: true,
       mynews: []
     };
   },
@@ -36,11 +36,15 @@ export default {
         }
       );
       console.log(newsData);
-      this.mynews = newsData;
+      if (newsData.status !== 200) {
+        this.$message.error("出错了");
+      } else {
+        this.mynews = newsData.news_cn;
+      }
     }
   },
   watch: {
-    // 监听vuex里是否又变化
+    // 监听vuex里是否有变化
     "$store.state.signal"() {
       this.getCountryNewsCN();
     }

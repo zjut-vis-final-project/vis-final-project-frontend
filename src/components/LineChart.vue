@@ -65,8 +65,8 @@ export default {
       console.log(wi, hi);
     },
     async request() {
-      const { data: data234 } = await this.$http.get("http://127.0.0.1:3000/");
-      console.log(data234);
+      // const { data: data234 } = await this.$http.get("http://127.0.0.1:3000/");
+      // console.log(data234);
     }
   }
 };

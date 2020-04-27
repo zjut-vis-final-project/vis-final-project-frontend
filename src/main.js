@@ -13,6 +13,7 @@ import {
   Timeline,
   TimelineItem,
   DatePicker,
+  Message
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Card);
@@ -27,6 +28,7 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios;
+Vue.prototype.$message = Message
 new Vue({
   router,
   store,

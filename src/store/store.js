@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        startTime: '',
-        endTime: '',
+        startTime: '2020/1/23',
+        endTime: '2020/4/1',
         signal: 1
     },
     mutations: {
