@@ -9,9 +9,12 @@
       size="mini"
       @change="onchange"
     ></el-date-picker>
-    <h3>确诊人数:</h3>100
-    <h3>治愈人数:</h3>100
-    <h3>死亡人数:</h3>100
+    <h3>确诊人数:</h3>
+    {{this.$store.state.basic_cn.all_confirmed}}
+    <h3>治愈人数:</h3>
+    {{this.$store.state.basic_cn.all_cure}}
+    <h3>死亡人数:</h3>
+    {{this.$store.state.basic_cn.all_death}}
   </el-card>
 </template>
 
@@ -23,14 +26,12 @@ export default {
     };
   },
   created() {
-    console.log(this);
+    // console.log(this);
   },
   methods: {
     onchange() {
       // vuex 改变全局状态
       this.$store.commit("timeChange", this.formatTime);
-      console.log("起始时间:", this.$store.state.startTime);
-      console.log("截至时间:", this.$store.state.endTime);
     }
   },
   computed: {

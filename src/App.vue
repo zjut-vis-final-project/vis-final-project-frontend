@@ -18,6 +18,44 @@
   </div>
 </template>
 
+<script>
+export default {
+  // 集中监控
+  watch: {
+    // 监听vuex里 时间是否有变化
+    "$store.state.timeSignal"() {
+      // 全国模式
+      if (this.$store.state.mode === 0) {
+        // 更新全国新闻
+        this.$store.dispatch("getCountryNewsCN");
+        // 更新全国每日数据
+        this.$store.dispatch("getCountryBasic");
+        // 更新全国男女确诊
+        this.$store.dispatch("getCountryGender");
+      }
+      // 省模式
+      else {
+        // 更新某个省的新闻
+        this.$store.dispatch("getProvinceNewsCN");
+        // 更新省的具体数据
+        this.$store.dispatch("getAllProvinceBasic");
+      }
+      console.log("时间改变");
+      console.log("起始时间:", this.$store.state.startTime);
+      console.log("截至时间:", this.$store.state.endTime);
+    },
+    // 监听vuex里 省地区是否有变化
+    "$store.state.provinceSingal"() {
+      // 点了某个省 会修改为省的数据
+      // 改为省模式
+      console.log("省改变为", this.$store.state.provinceName);
+      this.$store.state.mode = 1;
+      this.$store.dispatch("getProvinceNewsCN");
+    }
+  }
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

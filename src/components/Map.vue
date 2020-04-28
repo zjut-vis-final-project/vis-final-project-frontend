@@ -48,7 +48,8 @@ export default {
           fillOpacity: 0.1
         }).addTo(that.map);
         lg.on("click", function(e) {
-          console.log(d);
+          // 向vuex进行推送
+          that.$store.commit("provinceChange", d);
           that.map.flyTo(e.latlng);
         });
       });
