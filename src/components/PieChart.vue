@@ -65,11 +65,11 @@ export default {
 
 <style scoped>
 #pie {
-  width: 250px;
+  /* width: 250px; */
   height: 250px;
 }
 .pie {
-  width: 20%;
+  width: 30%;
 }
 </style>>
 

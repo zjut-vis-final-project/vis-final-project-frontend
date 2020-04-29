@@ -18,12 +18,51 @@ const store = new Vuex.Store({
         // 省新闻
         news_pro: [],
         // 各省的基本数据
-        basic_pro: {},
+        basic_pro: [],
         // 全国的每日数据
         basic_cn: {
+            "status": 200,
             "all_confirmed": '该时间段的确诊总数',
             "all_death": '该时间段的死亡总数',
-            "all_cure": '该时间段的治愈总数'
+            "all_cure": '该时间段的治愈总数',
+            "country_data": [
+                {
+                    "time": '3月1日',
+                    "confirmed": 33,
+                    "death": 345,
+                    "cure": 67
+                },
+                {
+                    "time": '3月2日',
+                    "confirmed": 23,
+                    "death": 53,
+                    "cure": 12
+                },
+                {
+                    "time": '3月3日',
+                    "confirmed": 65,
+                    "death": 55,
+                    "cure": 12
+                },
+                {
+                    "time": '3月4日',
+                    "confirmed": 65,
+                    "death": 55,
+                    "cure": 12
+                },
+                {
+                    "time": '3月5日',
+                    "confirmed": 65,
+                    "death": 55,
+                    "cure": 12
+                },
+                {
+                    "time": '3月6日',
+                    "confirmed": 65,
+                    "death": 55,
+                    "cure": 60
+                },
+            ]
         },
         // 男女确诊人数
         gender: []
@@ -102,7 +141,7 @@ const store = new Vuex.Store({
         // 获取省的具体数据
         async getAllProvinceBasic() {
             const { data: provinceData } = await axios.get(
-                "http://127.0.0.1:3000/getProvinceNewsCN",
+                "http://127.0.0.1:3000/getAllProvinceBasic",
                 {
                     params: {
                         start: this.state.startTime,
@@ -115,7 +154,8 @@ const store = new Vuex.Store({
                 // this.$message.error("出错了");
                 Message.error('出错了')
             } else {
-                this.commit('basic_proChange', provinceData)
+                this.commit('basic_proChange', provinceData.province)
+                console.log(this.state.basic_pro)
             }
         },
         // 获取国家的具体数据

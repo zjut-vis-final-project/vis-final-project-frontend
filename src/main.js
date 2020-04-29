@@ -13,7 +13,7 @@ import {
   Timeline,
   TimelineItem,
   DatePicker,
-  Message
+  Message, Button
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Card);
@@ -23,6 +23,7 @@ Vue.use(Header);
 Vue.use(Timeline);
 Vue.use(TimelineItem);
 Vue.use(DatePicker);
+Vue.use(Button)
 import 'leaflet/dist/leaflet.css';
 Vue.config.productionTip = false;
 

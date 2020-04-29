@@ -27,6 +27,7 @@ export default {
   },
   created() {
     // console.log(this);
+    this.$store.dispatch("getAllProvinceBasic");
   },
   methods: {
     onchange() {

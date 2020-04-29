@@ -51,6 +51,7 @@ export default {
       console.log("省改变为", this.$store.state.provinceName);
       this.$store.state.mode = 1;
       this.$store.dispatch("getProvinceNewsCN");
+      this.$store.dispatch("getAllProvinceBasic");
     }
   }
 };
