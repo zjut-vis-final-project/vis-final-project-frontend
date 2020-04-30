@@ -3,7 +3,7 @@
     <h3>重大新闻</h3>
     <el-timeline :reverse="reverse">
       <el-timeline-item
-        v-for="item in this.$store.state.mode===0?this.$store.state.news_cn.news_cn:$store.state.news_pro.news_pro"
+        v-for="item in this.$store.state.mode===0?this.$store.state.news_cn:$store.state.news_pro"
         :key="item.news_id"
         :timestamp="(new Date(item.news_time)).toLocaleString()+item.news_owner"
       >
@@ -25,7 +25,22 @@ export default {
     this.$store.dispatch("getCountryNewsCN");
   },
   methods: {},
-  watch: {}
+  watch: {
+    // 监听地区变化
+    "$store.state.provinceSingal"() {
+      if (this.$store.state.mode === 1) {
+        this.$store.dispatch("getProvinceNewsCN");
+      }
+    },
+    // 监听时间变化
+    "$store.state.timeSignal"() {
+      if (this.$store.state.mode === 0) {
+        this.$store.dispatch("getCountryNewsCN");
+      } else {
+        this.$store.dispatch("getProvinceNewsCN");
+      }
+    }
+  }
 };
 </script>
 

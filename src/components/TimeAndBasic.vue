@@ -12,9 +12,11 @@
     <h3>确诊人数:</h3>
     {{this.$store.state.basic_cn.all_confirmed}}
     <h3>治愈人数:</h3>
-    {{this.$store.state.basic_cn.all_cure}}
-    <h3>死亡人数:</h3>
-    {{this.$store.state.basic_cn.all_death}}
+    <!-- {{this.$store.state.basic_cn.all_cure}} -->
+    {{this.$store.getters.test}}
+    <h3 @click="test">死亡人数:</h3>
+    <!-- {{this.$store.state.basic_cn.all_death}} -->
+    {{this.$store.state.testNum}}
   </el-card>
 </template>
 
@@ -27,9 +29,12 @@ export default {
   },
   created() {
     // console.log(this);
-    this.$store.dispatch("getAllProvinceBasic");
+    // console.log("line_origin", this.$store.getters.line_origin);
   },
   methods: {
+    test() {
+      this.$store.commit("testM");
+    },
     onchange() {
       // vuex 改变全局状态
       this.$store.commit("timeChange", this.formatTime);

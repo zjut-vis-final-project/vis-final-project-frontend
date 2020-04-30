@@ -50,6 +50,8 @@ export default {
         lg.on("click", function(e) {
           // 向vuex进行推送
           that.$store.commit("provinceChange", d);
+
+          console.log("省改变为", that.$store.state.provinceName);
           that.map.flyTo(e.latlng);
         });
       });

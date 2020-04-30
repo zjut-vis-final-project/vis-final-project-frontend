@@ -65,9 +65,51 @@ const store = new Vuex.Store({
             ]
         },
         // 男女确诊人数
-        gender: []
+        gender: [],
+        testNum: 1,
+    },
+    getters: {
+        test(state) {
+            return state.testNum
+        },
+        line_origin(state) {
+            if (state.mode === 0) {
+                return state.basic_cn.country_data
+            }
+            if (state.mode === 1) {
+                let timeFormat = function (str) {
+                    let t = new Date(str);
+                    let s = t
+                        .toLocaleString()
+                        .split(" ")[0]
+                        .substring(5)
+                        .replace("/", "月");
+                    s = s + "日";
+                    return s;
+                }
+                // 挑选当前的省数据
+                let result = state.basic_pro.find(function (curr) {
+                    return curr.pro_name === state.provinceName
+                })
+                // 对日期格式进行修改
+                for (let i in result.pro_data)
+                    result.pro_data[i].time = timeFormat(result.pro_data[i].time);
+                console.log('line_origin', result.pro_data)
+                return result.pro_data
+            }
+        },
+        line_name(state) {
+            if (state.mode === 0) {
+                return '全国'
+            } else {
+                return state.provinceName
+            }
+        }
     },
     mutations: {
+        testM(state) {
+            state.testNum++
+        },
         timeChange(state, time) {
             state.startTime = time[0]
             state.endTime = time[1]
@@ -76,6 +118,7 @@ const store = new Vuex.Store({
         provinceChange(state, name) {
             state.provinceName = name
             state.provinceSingal *= -1
+            state.mode = 1;
         },
         // 中国全国新闻数据
         news_cnChange(state, data) {
@@ -110,12 +153,12 @@ const store = new Vuex.Store({
                     }
                 }
             );
-            console.log('调用了getCountryNewsCN接口:', newsData);
+            console.log('调用了getCountryNewsCN接口:', newsData.news_pro);
             if (newsData.status !== 200) {
                 // this.$message.error("出错了");
                 Message.error('出错了')
             } else {
-                this.commit('news_cnChange', newsData)
+                this.commit('news_cnChange', newsData.news_pro)
             }
         },
         // 获取某省的新闻数据
@@ -130,12 +173,12 @@ const store = new Vuex.Store({
                     }
                 }
             )
-            console.log('调用了getProvinceNewsCN接口:', newsData)
+            console.log('调用了getProvinceNewsCN接口:', newsData.news_cn)
             if (newsData.status !== 200) {
                 // this.$message.error("出错了");
                 Message.error('出错了')
             } else {
-                this.commit('news_proChange', newsData)
+                this.commit('news_proChange', newsData.news_cn)
             }
         },
         // 获取省的具体数据
@@ -155,7 +198,6 @@ const store = new Vuex.Store({
                 Message.error('出错了')
             } else {
                 this.commit('basic_proChange', provinceData.province)
-                console.log(this.state.basic_pro)
             }
         },
         // 获取国家的具体数据
