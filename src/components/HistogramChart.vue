@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card histogram">
+  <el-card class="box-card histogram" body-style="height:80%">
     <div id="histogram"></div>
   </el-card>
 </template>
@@ -34,8 +34,8 @@ export default {
           {
             // 这个dataZoom组件，默认控制x轴。
             type: "slider", // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-            start: 10, // 左边在 10% 的位置。
-            end: 60 // 右边在 60% 的位置。
+            start: 0, // 左边在 0% 的位置。
+            end: 100 // 右边在 100% 的位置。
           }
         ],
         series: [
@@ -49,6 +49,9 @@ export default {
           }
         ]
       });
+      window.addEventListener("resize", () => {
+        mychart.resize();
+      });
     }
   }
 };
@@ -57,10 +60,12 @@ export default {
 <style scoped>
 #histogram {
   /* width: 800px; */
-  height: 250px;
+  /* height: 250px; */
+  height: 100%;
 }
 .histogram {
   width: 60%;
+  height: 90%;
 }
 </style>>
 

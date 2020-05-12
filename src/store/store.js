@@ -21,48 +21,48 @@ const store = new Vuex.Store({
         basic_pro: [],
         // 全国的每日数据
         basic_cn: {
-            "status": 200,
-            "all_confirmed": '该时间段的确诊总数',
-            "all_death": '该时间段的死亡总数',
-            "all_cure": '该时间段的治愈总数',
-            "country_data": [
-                {
-                    "time": '3月1日',
-                    "confirmed": 33,
-                    "death": 345,
-                    "cure": 67
-                },
-                {
-                    "time": '3月2日',
-                    "confirmed": 23,
-                    "death": 53,
-                    "cure": 12
-                },
-                {
-                    "time": '3月3日',
-                    "confirmed": 65,
-                    "death": 55,
-                    "cure": 12
-                },
-                {
-                    "time": '3月4日',
-                    "confirmed": 65,
-                    "death": 55,
-                    "cure": 12
-                },
-                {
-                    "time": '3月5日',
-                    "confirmed": 65,
-                    "death": 55,
-                    "cure": 12
-                },
-                {
-                    "time": '3月6日',
-                    "confirmed": 65,
-                    "death": 55,
-                    "cure": 60
-                },
-            ]
+            // "status": 200,
+            // "all_confirmed": '该时间段的确诊总数',
+            // "all_death": '该时间段的死亡总数',
+            // "all_cure": '该时间段的治愈总数',
+            // "country_data": [
+            //     {
+            //         "time": '3月1日',
+            //         "confirmed": 33,
+            //         "death": 345,
+            //         "cure": 67
+            //     },
+            //     {
+            //         "time": '3月2日',
+            //         "confirmed": 23,
+            //         "death": 53,
+            //         "cure": 12
+            //     },
+            //     {
+            //         "time": '3月3日',
+            //         "confirmed": 65,
+            //         "death": 55,
+            //         "cure": 12
+            //     },
+            //     {
+            //         "time": '3月4日',
+            //         "confirmed": 65,
+            //         "death": 55,
+            //         "cure": 12
+            //     },
+            //     {
+            //         "time": '3月5日',
+            //         "confirmed": 65,
+            //         "death": 55,
+            //         "cure": 12
+            //     },
+            //     {
+            //         "time": '3月6日',
+            //         "confirmed": 65,
+            //         "death": 55,
+            //         "cure": 60
+            //     },
+            // ]
         },
         // 男女确诊人数
         gender: [],
@@ -74,27 +74,24 @@ const store = new Vuex.Store({
         },
         line_origin(state) {
             if (state.mode === 0) {
-                return state.basic_cn.country_data
+                let result = state.basic_cn.country_data
+                // 修改日期格式
+                result.forEach(item => {
+                    let t = new Date(item.time)
+                    item.time = t.toLocaleDateString()
+                })
+                return result
             }
             if (state.mode === 1) {
-                let timeFormat = function (str) {
-                    let t = new Date(str);
-                    let s = t
-                        .toLocaleString()
-                        .split(" ")[0]
-                        .substring(5)
-                        .replace("/", "月");
-                    s = s + "日";
-                    return s;
-                }
                 // 挑选当前的省数据
                 let result = state.basic_pro.find(function (curr) {
                     return curr.pro_name === state.provinceName
                 })
-                // 对日期格式进行修改
-                for (let i in result.pro_data)
-                    result.pro_data[i].time = timeFormat(result.pro_data[i].time);
-                console.log('line_origin', result.pro_data)
+                result.pro_data.forEach(item => {
+                    let t = new Date(item.time)
+                    item.time = t.toLocaleDateString()
+                })
+                // console.log('line_origin', result.pro_data)
                 return result.pro_data
             }
         },

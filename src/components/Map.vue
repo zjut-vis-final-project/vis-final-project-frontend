@@ -1,6 +1,6 @@
 
 <template>
-  <el-card class="box-card map">
+  <el-card class="box-card map" body-style="height:80%;padding:0">
     <div id="map"></div>
   </el-card>
 </template>
@@ -24,7 +24,8 @@ export default {
       this.map = L.map("map", {
         minZoom: 3,
         maxZoom: 14,
-        center: [38.240018034923, 110.13066322374],
+        // center: [38.240018034923, 110.13066322374],
+        center: [34, 110.13066322374],
         zoom: 3,
         zoomControl: false,
         attributionControl: false,
@@ -63,13 +64,17 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 300px;
+  /* height: 300px; */
+  height: 126%;
 }
 .map {
   width: 60%;
-  height: 300px;
+  height: 90%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 .leaflet-container {
-  overflow: visible;
+  /* overflow: visible; */
 }
 </style>

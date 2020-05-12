@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card news">
+  <el-card class="box-card news" body-style="height:80%">
     <h3>重大新闻</h3>
     <el-timeline :reverse="reverse">
       <el-timeline-item
@@ -47,7 +47,8 @@ export default {
 <style scoped>
 .news {
   width: 20%;
-  height: 300px;
+  /* height: 300px; */
+  height: 90%;
   overflow-y: scroll;
 }
 h3 {

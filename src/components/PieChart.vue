@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card pie">
+  <el-card class="box-card pie" body-style="height:80%">
     <div id="pie"></div>
   </el-card>
 </template>
@@ -58,6 +58,9 @@ export default {
           }
         ]
       });
+      window.addEventListener("resize", () => {
+        mychart.resize();
+      });
     }
   }
 };
@@ -66,10 +69,12 @@ export default {
 <style scoped>
 #pie {
   /* width: 250px; */
-  height: 250px;
+  /* height: 250px; */
+  height: 100%;
 }
 .pie {
   width: 30%;
+  height: 90%;
 }
 </style>>
 

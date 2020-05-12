@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card line">
+  <el-card class="box-card line" body-style="height:80%">
     <div id="line"></div>
     <div class="btn">
       <el-button size="mini" type="primary" @click="clickConfirmed">确诊</el-button>
@@ -21,8 +21,9 @@ export default {
       }
     };
   },
-  mounted() {
+  async mounted() {
     this.$store.dispatch("getAllProvinceBasic");
+    await this.$store.dispatch("getCountryBasic");
     this.drawLine();
   },
   methods: {
@@ -61,9 +62,12 @@ export default {
             // end: 100 // 右边在 100% 的位置。
           }
         ],
+
         series: [
           {
             type: "line",
+
+            color: "rgb(245,108,108)",
             // 显示面积
             // areaStyle: {},
             // 指定x轴为time
@@ -74,28 +78,15 @@ export default {
           }
         ],
         grid: {
-          x: 30,
+          x: 50,
           y: 50
         }
       });
+      window.addEventListener("resize", () => {
+        mychart.resize();
+      });
     },
-    adjust() {
-      // 参数container为图表盒子节点.charts为图表节点
-      let charts = document.getElementById("line");
-      let container = document.getElementsByClassName("line")[0];
-      function getStyle(el, name) {
-        if (window.getComputedStyle) {
-          return window.getComputedStyle(el, null);
-        } else {
-          return el.currentStyle;
-        }
-      }
-      var wi = getStyle(container, "width").width;
-      var hi = getStyle(container, "height").height;
-      charts.style.width = wi;
-      // charts.style.height = hi;
-      console.log(wi, hi);
-    },
+
     clickConfirmed() {
       this.mode.typeCN = `确诊`;
       this.mode.type =
@@ -120,11 +111,13 @@ export default {
     // 监听vuex里 是否选择了地区
     async "$store.state.provinceSingal"() {
       await this.$store.dispatch("getAllProvinceBasic");
+      await this.$store.dispatch("getCountryBasic");
       this.drawLine();
     },
     // 监听时间变化
     async "$store.state.timeSignal"() {
       await this.$store.dispatch("getAllProvinceBasic");
+      await this.$store.dispatch("getCountryBasic");
       this.drawLine();
     }
   }
@@ -134,12 +127,14 @@ export default {
 <style scoped>
 #line {
   /* width: 100%; */
-  height: 220px;
+  /* height: 220px; */
+  height: 100%;
 }
 
 .line {
   width: 30%;
   margin: 0 auto;
+  height: 90%;
 }
 .btn {
   display: flex;

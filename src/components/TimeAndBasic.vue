@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card timeAndBasic">
+  <el-card class="box-card timeAndBasic" body-style="height:80%">
     <el-date-picker
       v-model="timeRange"
       type="daterange"
@@ -12,11 +12,9 @@
     <h3>确诊人数:</h3>
     {{this.$store.state.basic_cn.all_confirmed}}
     <h3>治愈人数:</h3>
-    <!-- {{this.$store.state.basic_cn.all_cure}} -->
-    {{this.$store.getters.test}}
-    <h3 @click="test">死亡人数:</h3>
-    <!-- {{this.$store.state.basic_cn.all_death}} -->
-    {{this.$store.state.testNum}}
+    {{this.$store.state.basic_cn.all_cure}}
+    <h3>死亡人数:</h3>
+    {{this.$store.state.basic_cn.all_death}}
   </el-card>
 </template>
 
@@ -32,9 +30,6 @@ export default {
     // console.log("line_origin", this.$store.getters.line_origin);
   },
   methods: {
-    test() {
-      this.$store.commit("testM");
-    },
     onchange() {
       // vuex 改变全局状态
       this.$store.commit("timeChange", this.formatTime);
@@ -57,7 +52,7 @@ export default {
 <style scoped>
 .timeAndBasic {
   width: 20%;
-  height: 300px;
+  height: 90%;
   /* overflow: hidden; */
 }
 .el-date-editor--daterange.el-input,

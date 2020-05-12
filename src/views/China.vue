@@ -44,12 +44,13 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 .partChina .up {
   width: 100%;
-  /* height: 55%; */
+  /* flex: 1; */
+  height: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -57,7 +58,8 @@ export default {
 }
 .partChina .down {
   width: 100%;
-  /* height: 40%; */
+  /* flex: 1; */
+  height: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
