@@ -19,7 +19,25 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    this.$store.dispatch("getAllProvinceBasic");
+    this.$store.dispatch("getCountryBasic");
+    this.$store.dispatch("getCountryGender");
+  },
+  watch: {
+    //监听vuex里 是否选择了地区
+    "$store.state.provinceSingal"() {
+      this.$store.dispatch("getAllProvinceBasic");
+      //  this.$store.dispatch("getCountryBasic");
+    },
+    // 监听时间变化
+    "$store.state.timeSignal"() {
+      this.$store.dispatch("getAllProvinceBasic");
+      this.$store.dispatch("getCountryBasic");
+    }
+  }
+};
 </script>
 
 <style>

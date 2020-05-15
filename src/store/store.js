@@ -72,6 +72,7 @@ const store = new Vuex.Store({
         test(state) {
             return state.testNum
         },
+        // 对象数组
         line_origin(state) {
             if (state.mode === 0) {
                 let result = state.basic_cn.country_data
@@ -101,6 +102,50 @@ const store = new Vuex.Store({
             } else {
                 return state.provinceName
             }
+        },
+        histogram_origin(state) {
+            if (state.mode === 0) {
+                let result = state.basic_pro.map(item => {
+                    let obj = {}
+                    obj.pro_name = item.pro_name
+                    obj.whole_confirmed = item.pro_whole.confirmed
+                    obj.whole_death = item.pro_whole.death
+                    obj.whole_cure = item.pro_whole.cure
+                    obj.confirmed_areaRate = obj.whole_confirmed / item.pro_area
+                    obj.death_areaRate = obj.whole_death / item.pro_area
+                    obj.cure_areaRate = obj.whole_cure / item.pro_area
+                    obj.confirmed_populationRate = obj.whole_confirmed / item.pro_population
+                    obj.death_populationRate = obj.whole_death / item.pro_population
+                    obj.cure_populationRate = obj.whole_cure / item.pro_population
+                    return obj
+                })
+                return result
+            }
+            else {
+                // 挑选当前省的数据
+                let result = state.basic_pro.find(function (curr) {
+                    return curr.pro_name === state.provinceName
+                })
+                return result.pro_city
+            }
+        },
+        pie_origin(state) {
+            let result = state.gender
+            result.maleArr = []
+            result.femaleArr = []
+            for (let i = 0; i < 10; i++) {
+                let obj1 = {}
+                let obj2 = {}
+                obj1.value = state.gender.data['男'][i]
+                obj2.value = state.gender.data['女'][i]
+                obj1.name = state.gender.age[i]
+                obj2.name = state.gender.age[i]
+
+                result.maleArr.push(obj1)
+                result.femaleArr.push(obj2)
+            }
+
+            return result
         }
     },
     mutations: {
@@ -219,21 +264,21 @@ const store = new Vuex.Store({
         // 获取全国的确诊男女人数
         async getCountryGender() {
             const { data: gender } = await axios.get(
-                "http://127.0.0.1:3000/getGender",
-                {
-                    params: {
-                        start: this.state.startTime,
-                        end: this.state.endTime
-                    }
-                }
+                "http://127.0.0.1:3000/getGender"
+                // ,
+                // {
+                //     params: {
+                //         start: this.state.startTime,
+                //         end: this.state.endTime
+                //     }
+                // }
             )
             console.log('调用了getGender接口:', gender)
-            if (gender.status !== 200) {
-                // this.$message.error("出错了");
-                Message.error('出错了')
-            } else {
-                this.commit('genderChange', gender)
-            }
+            // if (gender.status !== 200) {
+            //     Message.error('eee出错了')
+            // } else {
+            this.commit('genderChange', gender)
+            // }
         }
     }
 })

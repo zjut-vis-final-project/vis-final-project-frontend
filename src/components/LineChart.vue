@@ -22,9 +22,9 @@ export default {
     };
   },
   async mounted() {
-    this.$store.dispatch("getAllProvinceBasic");
-    await this.$store.dispatch("getCountryBasic");
-    this.drawLine();
+    // this.$store.dispatch("getAllProvinceBasic");
+    // await this.$store.dispatch("getCountryBasic");
+    // this.drawLine();
   },
   methods: {
     drawLine() {
@@ -108,16 +108,11 @@ export default {
     }
   },
   watch: {
-    // 监听vuex里 是否选择了地区
-    async "$store.state.provinceSingal"() {
-      await this.$store.dispatch("getAllProvinceBasic");
-      await this.$store.dispatch("getCountryBasic");
+    "$store.state.basic_pro"() {
+      console.log(this.$store.getters.line_origin);
       this.drawLine();
     },
-    // 监听时间变化
-    async "$store.state.timeSignal"() {
-      await this.$store.dispatch("getAllProvinceBasic");
-      await this.$store.dispatch("getCountryBasic");
+    "$store.state.basic_cn"() {
       this.drawLine();
     }
   }
