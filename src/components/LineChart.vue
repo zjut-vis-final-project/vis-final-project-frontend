@@ -33,6 +33,13 @@ export default {
         // "light"
       );
       mychart.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
         lineStyle: {
           color: this.mode.color
         },
@@ -66,7 +73,7 @@ export default {
         series: [
           {
             type: "line",
-
+            smooth: true,
             color: "rgb(245,108,108)",
             // 显示面积
             // areaStyle: {},

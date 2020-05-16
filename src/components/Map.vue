@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       msg: "welcome to ",
-      map: ""
+      map: null
     };
   },
   mounted() {
