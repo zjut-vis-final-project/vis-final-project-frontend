@@ -11,32 +11,16 @@
         <div class="setting">设置</div>
       </el-header>
       <!-- 主要区域 -->
-      <el-main>
-        <router-view />
-      </el-main>
+
+      <router-view />
     </el-container>
   </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    this.$store.dispatch("getAllProvinceBasic");
-    this.$store.dispatch("getCountryBasic");
-    this.$store.dispatch("getCountryGender");
-  },
-  watch: {
-    //监听vuex里 是否选择了地区
-    "$store.state.provinceSingal"() {
-      this.$store.dispatch("getAllProvinceBasic");
-      //  this.$store.dispatch("getCountryBasic");
-    },
-    // 监听时间变化
-    "$store.state.timeSignal"() {
-      this.$store.dispatch("getAllProvinceBasic");
-      this.$store.dispatch("getCountryBasic");
-    }
-  }
+  mounted() {}
+  //
 };
 </script>
 

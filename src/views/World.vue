@@ -60,5 +60,6 @@ export default {
   position: absolute;
   z-index: 5;
   top: 30%;
+  z-index: 999;
 }
 </style>

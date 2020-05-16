@@ -1,16 +1,18 @@
 <template>
-  <div class="partChina">
-    <div class="up">
-      <News></News>
-      <Map></Map>
-      <TimeAndBasic></TimeAndBasic>
+  <el-main>
+    <div class="partChina">
+      <div class="up">
+        <News></News>
+        <Map></Map>
+        <TimeAndBasic></TimeAndBasic>
+      </div>
+      <div class="down">
+        <LineChart></LineChart>
+        <HistogramChart></HistogramChart>
+        <PieChart></PieChart>
+      </div>
     </div>
-    <div class="down">
-      <LineChart></LineChart>
-      <HistogramChart></HistogramChart>
-      <PieChart></PieChart>
-    </div>
-  </div>
+  </el-main>
 </template>
 
 <script>
@@ -34,8 +36,23 @@ export default {
       msg: "welcome to "
     };
   },
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.$store.dispatch("getAllProvinceBasic");
+    this.$store.dispatch("getCountryBasic");
+    this.$store.dispatch("getCountryGender");
+  },
+  watch: {
+    //监听vuex里 是否选择了地区
+    "$store.state.provinceSingal"() {
+      this.$store.dispatch("getAllProvinceBasic");
+      //  this.$store.dispatch("getCountryBasic");
+    },
+    // 监听时间变化
+    "$store.state.timeSignal"() {
+      this.$store.dispatch("getAllProvinceBasic");
+      this.$store.dispatch("getCountryBasic");
+    }
+  }
 };
 </script>
 
