@@ -8,6 +8,7 @@
 
 <script>
 import * as L from "leaflet";
+import worldCountry from "../assets/data/world_countries.json";
 export default {
   name: "Home",
   data() {
@@ -18,17 +19,19 @@ export default {
   },
   mounted() {
     this.loadmap();
+    this.drawCountry();
   },
   methods: {
     loadmap() {
       this.map = L.map("map", {
-        minZoom: 2,
-        maxZoom: 6,
+        minZoom: 3,
+        maxZoom: 4,
         // center: [38.240018034923, 110.13066322374],
         center: [34, 110.13066322374],
-        zoom: 3,
+        zoom: 4,
         zoomControl: false,
         attributionControl: false,
+        maxBounds: L.latLngBounds([90, -180], [-90, 180]),
         crs: L.CRS.EPSG3857
       });
 
@@ -42,6 +45,21 @@ export default {
     },
     fly() {
       this.map.flyTo(L.latLng(51.5, 0 + 20), 4);
+    },
+
+    drawCountry() {
+      var myStyle = {
+        color: "#00f",
+        weight: 3,
+        opacity: 0.5
+      };
+      var layerGeo = L.geoJSON(worldCountry, {
+        style: myStyle
+      })
+        .bindPopup(function(layer) {
+          return layer.feature.properties.name;
+        })
+        .addTo(this.map);
     },
     drawer(e) {
       if (this.cls === "short") this.cls = "long";
@@ -61,7 +79,7 @@ export default {
   width: 100%;
   background-color: black;
   z-index: 2;
-  filter: blur(5px) contrast(0.8) brightness(0.8);
+  /* filter: blur(5px) contrast(0.8) brightness(0.8); */
 }
 .bt {
   position: absolute;
