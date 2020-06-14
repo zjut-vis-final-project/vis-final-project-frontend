@@ -9,6 +9,7 @@
 <script>
 import * as L from "leaflet";
 import worldCountry from "../assets/data/world_countries.json";
+import world_results from "../assets/data/world_confirmed.json";
 export default {
   name: "Home",
   data() {
@@ -48,18 +49,57 @@ export default {
     },
 
     drawCountry() {
+      var color = d3
+        .scaleThreshold()
+        .domain([10, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000])
+        .range([
+          "rgb(255,255,204)",
+          "rgb(255,237,160)",
+          "rgb(254,217,118)",
+          "rgb(254,178,76)",
+          "rgb(253,141,60)",
+          "rgb(252,78,42)",
+          "rgb(227,26,28)",
+          "rgb(189,0,38)",
+          "rgb(128,0,38)"
+        ]);
       var myStyle = {
         color: "#00f",
         weight: 3,
         opacity: 0.5
       };
       var layerGeo = L.geoJSON(worldCountry, {
-        style: myStyle
+        style: function(feature) {
+          return {
+            color: color(world_results[feature.properties.name]),
+            weight: 3,
+
+            fill: true,
+            fillOpacity: 0.6,
+            fillColor: color(world_results[feature.properties.name])
+          };
+        }
       })
         .bindPopup(function(layer) {
           return layer.feature.properties.name;
         })
+        .on("click", function(e) {
+          console.log(e.layer.feature.properties.name);
+        })
         .addTo(this.map);
+      layerGeo
+        .on("mouseover", function(d) {
+          d.sourceTarget.setStyle({
+            color: "while",
+            weight: 10
+          });
+        })
+        .on("mouseout", function(d) {
+          d.sourceTarget.setStyle({
+            color: color(world_results[d.sourceTarget.feature.properties.name]),
+            weight: 3
+          });
+        });
     },
     drawer(e) {
       if (this.cls === "short") this.cls = "long";
