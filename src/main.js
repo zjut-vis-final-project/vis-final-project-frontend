@@ -14,6 +14,7 @@ import {
   TimelineItem,
   DatePicker,
   Message, Button,
+  Tag
 
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -25,6 +26,7 @@ Vue.use(Timeline);
 Vue.use(TimelineItem);
 Vue.use(DatePicker);
 Vue.use(Button)
+Vue.use(Tag)
 
 import 'leaflet/dist/leaflet.css';
 Vue.config.productionTip = false;

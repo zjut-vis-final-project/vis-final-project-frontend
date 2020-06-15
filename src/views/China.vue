@@ -1,18 +1,16 @@
 <template>
-  <el-main>
-    <div class="partChina">
-      <div class="up">
-        <News></News>
-        <Map></Map>
-        <TimeAndBasic></TimeAndBasic>
-      </div>
-      <div class="down">
-        <LineChart></LineChart>
-        <HistogramChart></HistogramChart>
-        <PieChart></PieChart>
-      </div>
+  <div class="partChina">
+    <div class="up">
+      <News></News>
+      <Map></Map>
+      <TimeAndBasic></TimeAndBasic>
     </div>
-  </el-main>
+    <div class="down">
+      <LineChart></LineChart>
+      <HistogramChart></HistogramChart>
+      <PieChart></PieChart>
+    </div>
+  </div>
 </template>
 
 <script>

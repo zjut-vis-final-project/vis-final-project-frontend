@@ -6,13 +6,16 @@
         <div class="title">Covid-19可视分析系统</div>
         <div class="change">
           <router-link to="/">中国板块 |</router-link>
-          <router-link to="/world">| 世界板块</router-link>
+          <router-link to="/line">| 时间线</router-link>
         </div>
         <div class="setting">设置</div>
       </el-header>
+      <!-- 解决fixed高度坍塌 -->
+      <div class="token"></div>
       <!-- 主要区域 -->
-
-      <router-view />
+      <el-main>
+        <router-view />
+      </el-main>
     </el-container>
   </div>
 </template>
@@ -46,17 +49,22 @@ body {
   line-height: 7vh;
 }
 .el-main {
+  padding: 10px !important;
   background-color: #e9eef3;
   height: 93vh;
   overflow: hidden;
 }
 
+.token {
+  height: 7vh;
+}
 .nav {
   width: 100%;
   background: #333333;
   color: white;
   text-align: center;
   display: flex;
+  position: fixed;
 }
 .nav a {
   color: white;
@@ -65,6 +73,7 @@ body {
 .nav .title {
   width: 25%;
   font-size: 26px;
+  position: relative;
 }
 .nav .change {
   text-align: center;

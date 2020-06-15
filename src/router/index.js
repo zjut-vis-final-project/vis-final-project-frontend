@@ -9,13 +9,21 @@ const routes = [
     name: 'china',
     component: () => import(/* webpackChunkName: "home" */ '../views/China.vue')
   },
+  // {
+  //   path: '/world',
+  //   name: 'world',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/World.vue')
+  // },
   {
-    path: '/world',
-    name: 'world',
+    path: '/line',
+    name: 'line',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/World.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Line.vue')
   }
 ]
 
