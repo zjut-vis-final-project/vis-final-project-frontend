@@ -3,8 +3,8 @@ import App from './App.vue';
 import router from './router';
 import echarts from 'echarts';
 import axios from 'axios';
-import Vuex from 'vuex';
-import store from './store/store';
+import Vuex from 'vuex'
+import store from './store/store'
 import {
   Card,
   Main,
@@ -13,8 +13,8 @@ import {
   Timeline,
   TimelineItem,
   DatePicker,
-  Message,
-  Button,
+  Message, Button,
+
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Card);
@@ -24,14 +24,14 @@ Vue.use(Header);
 Vue.use(Timeline);
 Vue.use(TimelineItem);
 Vue.use(DatePicker);
-Vue.use(Button);
-import * as d3 from 'd3';
+Vue.use(Button)
+
 import 'leaflet/dist/leaflet.css';
 Vue.config.productionTip = false;
-window.d3 = d3;
+
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios;
-Vue.prototype.$message = Message;
+Vue.prototype.$message = Message
 new Vue({
   router,
   store,
