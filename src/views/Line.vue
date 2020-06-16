@@ -2,8 +2,8 @@
   <div class="father">
     <!-- 左半部分的图标表 -->
     <div class="partLeft">
-      <div class="up">123</div>
-      <div class="down">456</div>
+      <div class="up" id="time-chart"></div>
+      <div class="down" id="word-chart"></div>
     </div>
     <!-- 解决坍塌 -->
     <div class="token"></div>
@@ -40,11 +40,25 @@ export default {
       endTime: "2020/3/16",
       arr: [],
       signal: 1,
-      tagHash: []
+      tagHash: {},
+      timeBasic: [],
+      colorList: [
+        "#7400b8",
+        "#6930c3",
+        "#5e60ce",
+        "#5390d9",
+        "#4ea8de",
+        "#48bfe3",
+        "#56cfe1",
+        "#64dfdf",
+        "#72efdd",
+        "#80ffdb"
+      ]
     };
   },
   mounted() {
     this.getWordList();
+    this.getWorldBasic();
     let that = this;
     document
       .getElementsByClassName("partRight")[0]
@@ -57,6 +71,8 @@ export default {
           let newD = new Date(nextDay).toLocaleString();
           that.endTime = newD.split(" ")[0];
           that.getWordList();
+
+          that.getWorldBasic();
           that.signal++;
         }
       });
@@ -73,7 +89,22 @@ export default {
         }
       );
       this.arr = data.news_pro;
-      console.log(this.arr);
+      this.drawBottomChart();
+      // console.log(this.arr);
+    },
+    getWorldBasic() {
+      var that = this;
+      this.$http
+        .get("http://127.0.0.1:3000/getWorldBasic", {
+          params: {
+            start: this.startTime,
+            end: this.endTime
+          }
+        })
+        .then(function(req) {
+          that.timeBasic = req.data.worldData;
+          that.drawTopChart();
+        });
     },
     colorClass(index) {
       if (index % 2 !== 0) {
@@ -81,6 +112,184 @@ export default {
       } else {
         return ` color${(index % 7) + 1}R`;
       }
+    },
+    drawTopChart() {
+      var that = this;
+
+      let timechart = this.$echarts.init(document.getElementById("time-chart"));
+
+      // 绘制图表
+      timechart.setOption({
+        title: {
+          text: "世界疫情情况随时间线进展 (至" + that.endTime + ")",
+          x: "center",
+          padding: 15
+        },
+        grid: {
+          top: "20%",
+          bottom: "10%",
+          left: "10%",
+          right: "10%",
+          containLabel: true
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985"
+            }
+          }
+        },
+        legend: {
+          data: ["已治愈", "已死亡", "正在患病"],
+          padding: [50, 50, 0, 0]
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: that.timeBasic.map(function(item) {
+            // let date = new Date(
+            //   Date.parse(item.updateTime)
+            // ).toLocaleDateString.split(" ")[0];
+            // return date;
+            return item.updateTime;
+          }),
+          axisLine: {}
+        },
+        yAxis: {
+          type: "value",
+          axisLine: {}
+          // scale: true
+        },
+        series: [
+          {
+            name: "正在患病",
+            data: that.timeBasic.map(
+              item =>
+                item["globalStatistics"]["confirmedCount"] -
+                item["globalStatistics"]["deadCount"] -
+                item["globalStatistics"]["curedCount"]
+            ),
+            type: "line",
+            areaStyle: {},
+            smooth: true,
+            color: "#4ea8de",
+            stack: "总量"
+          },
+          {
+            name: "已治愈",
+            data: that.timeBasic.map(
+              item => item["globalStatistics"]["curedCount"]
+            ),
+            type: "line",
+            areaStyle: {},
+            color: "#c6d8ff",
+            stack: "总量"
+          },
+          {
+            name: "已死亡",
+            data: that.timeBasic.map(
+              item => item["globalStatistics"]["deadCount"]
+            ),
+            type: "line",
+            areaStyle: {},
+            color: "#6677b7",
+            stack: "总量"
+          }
+        ]
+      });
+
+      setTimeout(function() {
+        window.addEventListener("resize", function() {
+          timechart.resize();
+        });
+      }, 200);
+    },
+    drawBottomChart() {
+      var that = this;
+      this.tagHash = {};
+      this.arr.forEach(function(item) {
+        item.news_words.forEach(function(d) {
+          if (that.tagHash[d] !== undefined) {
+            that.tagHash[d]++;
+          } else {
+            that.tagHash[d] = 1;
+          }
+        });
+      });
+      console.log(that.tagHash);
+      let wordchart = this.$echarts.init(document.getElementById("word-chart"));
+      wordchart.setOption({
+        title: {
+          text: "热点词Top10 (至" + that.endTime + ")",
+          x: "center",
+          padding: 15
+        },
+        grid: {
+          top: "20%",
+          bottom: "10%",
+          left: "10%",
+          right: "10%",
+          containLabel: true
+        },
+        legend: {
+          data: ["词频统计"]
+        },
+        toolbox: {
+          // y: 'bottom',
+          feature: {
+            saveAsImage: {
+              pixelRatio: 2
+            }
+          }
+        },
+        tooltip: {},
+        xAxis: {
+          data: Object.keys(that.tagHash)
+            .sort(function(a, b) {
+              return that.tagHash[a] < that.tagHash[b] ? 1 : -1;
+            })
+            .slice(0, 10),
+          splitLine: {
+            show: false
+          },
+          axisLabel: {
+            rotate: 60
+          }
+        },
+        yAxis: {},
+        series: [
+          {
+            type: "bar",
+            data: Object.keys(that.tagHash)
+              .sort(function(a, b) {
+                return that.tagHash[a] < that.tagHash[b] ? 1 : -1;
+              })
+              .slice(0, 10)
+              .map(item => that.tagHash[item]),
+            itemStyle: {
+              normal: {
+                color: function(params) {
+                  return that.colorList[params.dataIndex];
+                }
+              }
+            },
+            animationDelay: function(idx) {
+              return idx * 2;
+            }
+          }
+        ],
+        animationEasing: "elasticOut",
+        animationDelayUpdate: function(idx) {
+          return idx * 1;
+        }
+      });
+      setTimeout(function() {
+        window.addEventListener("resize", function() {
+          wordchart.resize();
+        });
+      }, 200);
     }
   },
   watch: {
