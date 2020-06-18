@@ -13,7 +13,9 @@
       <div class="container">
         <div class="pivot" v-for="(item,index) in arr" :key="index">
           <div :class="{'boxRight':index%2===0,'boxLeft':index%2!==0}">
-            <div :class="(index%2===0?'virtualBoxRight':'virtualBoxLeft')+colorClass(index) ">
+            <div
+              :class="(index%2===0?'virtualBoxRight':'virtualBoxLeft')+colorClass(index,item.dateNum) "
+            >
               <div :class="{'circleRight':index%2===0,'circleLeft':index%2!==0}"></div>
             </div>
             <div :class="{'mainBoxRight':index%2===0,'mainBoxLeft':index%2!==0}">
@@ -90,7 +92,7 @@ export default {
       );
       this.arr = data.news_pro;
       this.drawBottomChart();
-      // console.log(this.arr);
+      console.log(this.arr);
     },
     getWorldBasic() {
       var that = this;
@@ -106,11 +108,11 @@ export default {
           that.drawTopChart();
         });
     },
-    colorClass(index) {
+    colorClass(index, dateNum) {
       if (index % 2 !== 0) {
-        return ` color${(index % 7) + 1}`;
+        return ` color${((dateNum + 5) % 7) + 1}`;
       } else {
-        return ` color${(index % 7) + 1}R`;
+        return ` color${((dateNum + 5) % 7) + 1}R`;
       }
     },
     drawTopChart() {
